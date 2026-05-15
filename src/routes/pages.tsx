@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api/client";
 import { Card } from "@/components/ui/card";
@@ -19,9 +19,10 @@ export const Route = createFileRoute("/pages")({
 
 function PagesPage() {
   const { data, isLoading } = useQuery({ queryKey: ["pages"], queryFn: () => api.pages.list({ per_page: 50 }) });
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Pages" description="Every page that lives on your marketing site." actionLabel="New page" />
+      <PageHeader title="Pages" description="Every page that lives on your marketing site. Double-click a row to open." actionLabel="New page" />
       <Card className="p-4">
         <Table>
           <TableHeader>
@@ -37,7 +38,12 @@ function PagesPage() {
           <TableBody>
             {isLoading && <TableRow><TableCell colSpan={6} className="text-center py-10 text-muted-foreground">Loading…</TableCell></TableRow>}
             {data?.data.map((p) => (
-              <TableRow key={p.id}>
+              <TableRow
+                key={p.id}
+                className="cursor-pointer select-none"
+                title="Double-click to open"
+                onDoubleClick={() => navigate({ to: "/pages/$pageId", params: { pageId: String(p.id) } })}
+              >
                 <TableCell className="font-medium">{p.title}</TableCell>
                 <TableCell>
                   <span className="inline-flex items-center gap-1 text-sm text-muted-foreground font-mono">

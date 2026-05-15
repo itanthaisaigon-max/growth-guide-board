@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api/client";
 import { Card } from "@/components/ui/card";
@@ -19,9 +19,10 @@ const iconFor = { image: ImageIcon, video: FileVideo, document: FileText };
 
 function MediaPage() {
   const { data, isLoading } = useQuery({ queryKey: ["media"], queryFn: () => api.media.list({ per_page: 50 }) });
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Media library" description="All assets used across posts, pages, and portfolios." actionLabel="Upload files" />
+      <PageHeader title="Media library" description="All assets used across posts, pages, and portfolios. Double-click an item to open." actionLabel="Upload files" />
 
       <Card className="p-6 mb-4 border-dashed bg-muted/30 flex flex-col items-center text-center">
         <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[color:var(--primary-soft)] text-primary mb-3">
@@ -36,7 +37,12 @@ function MediaPage() {
         {data?.data.map((m) => {
           const Icon = iconFor[m.type];
           return (
-            <Card key={m.id} className="p-0 overflow-hidden group cursor-pointer">
+            <Card
+              key={m.id}
+              className="p-0 overflow-hidden group cursor-pointer"
+              title="Double-click to open"
+              onDoubleClick={() => navigate({ to: "/media/$mediaId", params: { mediaId: String(m.id) } })}
+            >
               <div className="aspect-square bg-muted relative">
                 {m.type === "image" ? (
                   <img src={m.url} alt={m.name} className="h-full w-full object-cover" loading="lazy" />

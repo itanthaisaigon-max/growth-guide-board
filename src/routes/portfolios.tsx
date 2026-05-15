@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api/client";
 import { Card } from "@/components/ui/card";
@@ -17,13 +17,19 @@ export const Route = createFileRoute("/portfolios")({
 
 function PortfoliosPage() {
   const { data, isLoading } = useQuery({ queryKey: ["portfolios"], queryFn: () => api.portfolios.list({ per_page: 50 }) });
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Portfolios" description="Client work and case studies featured on your site." actionLabel="New case study" />
+      <PageHeader title="Portfolios" description="Client work and case studies. Double-click a card to open." actionLabel="New case study" />
       {isLoading && <p className="text-muted-foreground text-sm">Loading…</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {data?.data.map((p) => (
-          <Card key={p.id} className="overflow-hidden p-0 group cursor-pointer hover:shadow-[var(--shadow-pop)] transition-shadow">
+          <Card
+            key={p.id}
+            className="overflow-hidden p-0 group cursor-pointer hover:shadow-[var(--shadow-pop)] transition-shadow"
+            title="Double-click to open"
+            onDoubleClick={() => navigate({ to: "/portfolios/$portfolioId", params: { portfolioId: String(p.id) } })}
+          >
             <div className="aspect-[4/3] overflow-hidden bg-muted">
               <img src={p.cover_url} alt={p.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
             </div>
