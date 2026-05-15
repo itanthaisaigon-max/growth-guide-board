@@ -23,10 +23,11 @@ interface Props<T> {
   filters?: { key: string; label: string; value: string }[];
   emptyText?: string;
   rowKey?: (row: T) => string;
+  onRowDoubleClick?: (row: T) => void;
 }
 
 export function ResourceTable<T extends { id: string | number }>({
-  queryKey, fetcher, columns, searchPlaceholder = "Search…", filters, emptyText = "No results.", rowKey,
+  queryKey, fetcher, columns, searchPlaceholder = "Search…", filters, emptyText = "No results.", rowKey, onRowDoubleClick,
 }: Props<T>) {
   const [params, setParams] = useState<ListParams>({ per_page: 20, page: 1, status: filters?.[0]?.value ?? "all" });
   const [searchInput, setSearchInput] = useState("");
@@ -89,7 +90,12 @@ export function ResourceTable<T extends { id: string | number }>({
               <TableRow><TableCell colSpan={columns.length} className="text-center py-10 text-muted-foreground">Loading…</TableCell></TableRow>
             )}
             {data?.data.map((row) => (
-              <TableRow key={rowKey ? rowKey(row) : String(row.id)}>
+              <TableRow
+                key={rowKey ? rowKey(row) : String(row.id)}
+                onDoubleClick={onRowDoubleClick ? () => onRowDoubleClick(row) : undefined}
+                className={cn(onRowDoubleClick && "cursor-pointer select-none")}
+                title={onRowDoubleClick ? "Double-click to open" : undefined}
+              >
                 {columns.map((c, i) => (
                   <TableCell key={i} className={cn(c.align === "right" && "text-right", c.className)}>
                     {c.cell(row)}
