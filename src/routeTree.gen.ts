@@ -27,7 +27,14 @@ import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProductsProductIdRouteImport } from './routes/products.$productId'
 import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
+import { Route as PortfoliosPortfolioIdRouteImport } from './routes/portfolios.$portfolioId'
+import { Route as PagesPageIdRouteImport } from './routes/pages.$pageId'
+import { Route as OrdersOrderIdRouteImport } from './routes/orders.$orderId'
+import { Route as MediaMediaIdRouteImport } from './routes/media.$mediaId'
+import { Route as CouponsCouponIdRouteImport } from './routes/coupons.$couponId'
+import { Route as CategoriesCategoryIdRouteImport } from './routes/categories.$categoryId'
 
 const TagsRoute = TagsRouteImport.update({
   id: '/tags',
@@ -119,75 +126,131 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
+  id: '/$productId',
+  path: '/$productId',
+  getParentRoute: () => ProductsRoute,
+} as any)
 const PostsPostIdRoute = PostsPostIdRouteImport.update({
   id: '/$postId',
   path: '/$postId',
   getParentRoute: () => PostsRoute,
 } as any)
+const PortfoliosPortfolioIdRoute = PortfoliosPortfolioIdRouteImport.update({
+  id: '/$portfolioId',
+  path: '/$portfolioId',
+  getParentRoute: () => PortfoliosRoute,
+} as any)
+const PagesPageIdRoute = PagesPageIdRouteImport.update({
+  id: '/$pageId',
+  path: '/$pageId',
+  getParentRoute: () => PagesRoute,
+} as any)
+const OrdersOrderIdRoute = OrdersOrderIdRouteImport.update({
+  id: '/$orderId',
+  path: '/$orderId',
+  getParentRoute: () => OrdersRoute,
+} as any)
+const MediaMediaIdRoute = MediaMediaIdRouteImport.update({
+  id: '/$mediaId',
+  path: '/$mediaId',
+  getParentRoute: () => MediaRoute,
+} as any)
+const CouponsCouponIdRoute = CouponsCouponIdRouteImport.update({
+  id: '/$couponId',
+  path: '/$couponId',
+  getParentRoute: () => CouponsRoute,
+} as any)
+const CategoriesCategoryIdRoute = CategoriesCategoryIdRouteImport.update({
+  id: '/$categoryId',
+  path: '/$categoryId',
+  getParentRoute: () => CategoriesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
-  '/categories': typeof CategoriesRoute
+  '/categories': typeof CategoriesRouteWithChildren
   '/contacts': typeof ContactsRoute
-  '/coupons': typeof CouponsRoute
+  '/coupons': typeof CouponsRouteWithChildren
   '/leads': typeof LeadsRoute
   '/login': typeof LoginRoute
-  '/media': typeof MediaRoute
+  '/media': typeof MediaRouteWithChildren
   '/navigation': typeof NavigationRoute
-  '/orders': typeof OrdersRoute
-  '/pages': typeof PagesRoute
-  '/portfolios': typeof PortfoliosRoute
+  '/orders': typeof OrdersRouteWithChildren
+  '/pages': typeof PagesRouteWithChildren
+  '/portfolios': typeof PortfoliosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
-  '/products': typeof ProductsRoute
+  '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/redirects': typeof RedirectsRoute
   '/settings': typeof SettingsRoute
   '/tags': typeof TagsRoute
+  '/categories/$categoryId': typeof CategoriesCategoryIdRoute
+  '/coupons/$couponId': typeof CouponsCouponIdRoute
+  '/media/$mediaId': typeof MediaMediaIdRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
+  '/pages/$pageId': typeof PagesPageIdRoute
+  '/portfolios/$portfolioId': typeof PortfoliosPortfolioIdRoute
   '/posts/$postId': typeof PostsPostIdRoute
+  '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
-  '/categories': typeof CategoriesRoute
+  '/categories': typeof CategoriesRouteWithChildren
   '/contacts': typeof ContactsRoute
-  '/coupons': typeof CouponsRoute
+  '/coupons': typeof CouponsRouteWithChildren
   '/leads': typeof LeadsRoute
   '/login': typeof LoginRoute
-  '/media': typeof MediaRoute
+  '/media': typeof MediaRouteWithChildren
   '/navigation': typeof NavigationRoute
-  '/orders': typeof OrdersRoute
-  '/pages': typeof PagesRoute
-  '/portfolios': typeof PortfoliosRoute
+  '/orders': typeof OrdersRouteWithChildren
+  '/pages': typeof PagesRouteWithChildren
+  '/portfolios': typeof PortfoliosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
-  '/products': typeof ProductsRoute
+  '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/redirects': typeof RedirectsRoute
   '/settings': typeof SettingsRoute
   '/tags': typeof TagsRoute
+  '/categories/$categoryId': typeof CategoriesCategoryIdRoute
+  '/coupons/$couponId': typeof CouponsCouponIdRoute
+  '/media/$mediaId': typeof MediaMediaIdRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
+  '/pages/$pageId': typeof PagesPageIdRoute
+  '/portfolios/$portfolioId': typeof PortfoliosPortfolioIdRoute
   '/posts/$postId': typeof PostsPostIdRoute
+  '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/accounts': typeof AccountsRoute
-  '/categories': typeof CategoriesRoute
+  '/categories': typeof CategoriesRouteWithChildren
   '/contacts': typeof ContactsRoute
-  '/coupons': typeof CouponsRoute
+  '/coupons': typeof CouponsRouteWithChildren
   '/leads': typeof LeadsRoute
   '/login': typeof LoginRoute
-  '/media': typeof MediaRoute
+  '/media': typeof MediaRouteWithChildren
   '/navigation': typeof NavigationRoute
-  '/orders': typeof OrdersRoute
-  '/pages': typeof PagesRoute
-  '/portfolios': typeof PortfoliosRoute
+  '/orders': typeof OrdersRouteWithChildren
+  '/pages': typeof PagesRouteWithChildren
+  '/portfolios': typeof PortfoliosRouteWithChildren
   '/posts': typeof PostsRouteWithChildren
-  '/products': typeof ProductsRoute
+  '/products': typeof ProductsRouteWithChildren
   '/profile': typeof ProfileRoute
   '/redirects': typeof RedirectsRoute
   '/settings': typeof SettingsRoute
   '/tags': typeof TagsRoute
+  '/categories/$categoryId': typeof CategoriesCategoryIdRoute
+  '/coupons/$couponId': typeof CouponsCouponIdRoute
+  '/media/$mediaId': typeof MediaMediaIdRoute
+  '/orders/$orderId': typeof OrdersOrderIdRoute
+  '/pages/$pageId': typeof PagesPageIdRoute
+  '/portfolios/$portfolioId': typeof PortfoliosPortfolioIdRoute
   '/posts/$postId': typeof PostsPostIdRoute
+  '/products/$productId': typeof ProductsProductIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -210,7 +273,14 @@ export interface FileRouteTypes {
     | '/redirects'
     | '/settings'
     | '/tags'
+    | '/categories/$categoryId'
+    | '/coupons/$couponId'
+    | '/media/$mediaId'
+    | '/orders/$orderId'
+    | '/pages/$pageId'
+    | '/portfolios/$portfolioId'
     | '/posts/$postId'
+    | '/products/$productId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -231,7 +301,14 @@ export interface FileRouteTypes {
     | '/redirects'
     | '/settings'
     | '/tags'
+    | '/categories/$categoryId'
+    | '/coupons/$couponId'
+    | '/media/$mediaId'
+    | '/orders/$orderId'
+    | '/pages/$pageId'
+    | '/portfolios/$portfolioId'
     | '/posts/$postId'
+    | '/products/$productId'
   id:
     | '__root__'
     | '/'
@@ -252,24 +329,31 @@ export interface FileRouteTypes {
     | '/redirects'
     | '/settings'
     | '/tags'
+    | '/categories/$categoryId'
+    | '/coupons/$couponId'
+    | '/media/$mediaId'
+    | '/orders/$orderId'
+    | '/pages/$pageId'
+    | '/portfolios/$portfolioId'
     | '/posts/$postId'
+    | '/products/$productId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountsRoute: typeof AccountsRoute
-  CategoriesRoute: typeof CategoriesRoute
+  CategoriesRoute: typeof CategoriesRouteWithChildren
   ContactsRoute: typeof ContactsRoute
-  CouponsRoute: typeof CouponsRoute
+  CouponsRoute: typeof CouponsRouteWithChildren
   LeadsRoute: typeof LeadsRoute
   LoginRoute: typeof LoginRoute
-  MediaRoute: typeof MediaRoute
+  MediaRoute: typeof MediaRouteWithChildren
   NavigationRoute: typeof NavigationRoute
-  OrdersRoute: typeof OrdersRoute
-  PagesRoute: typeof PagesRoute
-  PortfoliosRoute: typeof PortfoliosRoute
+  OrdersRoute: typeof OrdersRouteWithChildren
+  PagesRoute: typeof PagesRouteWithChildren
+  PortfoliosRoute: typeof PortfoliosRouteWithChildren
   PostsRoute: typeof PostsRouteWithChildren
-  ProductsRoute: typeof ProductsRoute
+  ProductsRoute: typeof ProductsRouteWithChildren
   ProfileRoute: typeof ProfileRoute
   RedirectsRoute: typeof RedirectsRoute
   SettingsRoute: typeof SettingsRoute
@@ -404,6 +488,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/products/$productId': {
+      id: '/products/$productId'
+      path: '/$productId'
+      fullPath: '/products/$productId'
+      preLoaderRoute: typeof ProductsProductIdRouteImport
+      parentRoute: typeof ProductsRoute
+    }
     '/posts/$postId': {
       id: '/posts/$postId'
       path: '/$postId'
@@ -411,8 +502,116 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdRouteImport
       parentRoute: typeof PostsRoute
     }
+    '/portfolios/$portfolioId': {
+      id: '/portfolios/$portfolioId'
+      path: '/$portfolioId'
+      fullPath: '/portfolios/$portfolioId'
+      preLoaderRoute: typeof PortfoliosPortfolioIdRouteImport
+      parentRoute: typeof PortfoliosRoute
+    }
+    '/pages/$pageId': {
+      id: '/pages/$pageId'
+      path: '/$pageId'
+      fullPath: '/pages/$pageId'
+      preLoaderRoute: typeof PagesPageIdRouteImport
+      parentRoute: typeof PagesRoute
+    }
+    '/orders/$orderId': {
+      id: '/orders/$orderId'
+      path: '/$orderId'
+      fullPath: '/orders/$orderId'
+      preLoaderRoute: typeof OrdersOrderIdRouteImport
+      parentRoute: typeof OrdersRoute
+    }
+    '/media/$mediaId': {
+      id: '/media/$mediaId'
+      path: '/$mediaId'
+      fullPath: '/media/$mediaId'
+      preLoaderRoute: typeof MediaMediaIdRouteImport
+      parentRoute: typeof MediaRoute
+    }
+    '/coupons/$couponId': {
+      id: '/coupons/$couponId'
+      path: '/$couponId'
+      fullPath: '/coupons/$couponId'
+      preLoaderRoute: typeof CouponsCouponIdRouteImport
+      parentRoute: typeof CouponsRoute
+    }
+    '/categories/$categoryId': {
+      id: '/categories/$categoryId'
+      path: '/$categoryId'
+      fullPath: '/categories/$categoryId'
+      preLoaderRoute: typeof CategoriesCategoryIdRouteImport
+      parentRoute: typeof CategoriesRoute
+    }
   }
 }
+
+interface CategoriesRouteChildren {
+  CategoriesCategoryIdRoute: typeof CategoriesCategoryIdRoute
+}
+
+const CategoriesRouteChildren: CategoriesRouteChildren = {
+  CategoriesCategoryIdRoute: CategoriesCategoryIdRoute,
+}
+
+const CategoriesRouteWithChildren = CategoriesRoute._addFileChildren(
+  CategoriesRouteChildren,
+)
+
+interface CouponsRouteChildren {
+  CouponsCouponIdRoute: typeof CouponsCouponIdRoute
+}
+
+const CouponsRouteChildren: CouponsRouteChildren = {
+  CouponsCouponIdRoute: CouponsCouponIdRoute,
+}
+
+const CouponsRouteWithChildren =
+  CouponsRoute._addFileChildren(CouponsRouteChildren)
+
+interface MediaRouteChildren {
+  MediaMediaIdRoute: typeof MediaMediaIdRoute
+}
+
+const MediaRouteChildren: MediaRouteChildren = {
+  MediaMediaIdRoute: MediaMediaIdRoute,
+}
+
+const MediaRouteWithChildren = MediaRoute._addFileChildren(MediaRouteChildren)
+
+interface OrdersRouteChildren {
+  OrdersOrderIdRoute: typeof OrdersOrderIdRoute
+}
+
+const OrdersRouteChildren: OrdersRouteChildren = {
+  OrdersOrderIdRoute: OrdersOrderIdRoute,
+}
+
+const OrdersRouteWithChildren =
+  OrdersRoute._addFileChildren(OrdersRouteChildren)
+
+interface PagesRouteChildren {
+  PagesPageIdRoute: typeof PagesPageIdRoute
+}
+
+const PagesRouteChildren: PagesRouteChildren = {
+  PagesPageIdRoute: PagesPageIdRoute,
+}
+
+const PagesRouteWithChildren = PagesRoute._addFileChildren(PagesRouteChildren)
+
+interface PortfoliosRouteChildren {
+  PortfoliosPortfolioIdRoute: typeof PortfoliosPortfolioIdRoute
+}
+
+const PortfoliosRouteChildren: PortfoliosRouteChildren = {
+  PortfoliosPortfolioIdRoute: PortfoliosPortfolioIdRoute,
+}
+
+const PortfoliosRouteWithChildren = PortfoliosRoute._addFileChildren(
+  PortfoliosRouteChildren,
+)
 
 interface PostsRouteChildren {
   PostsPostIdRoute: typeof PostsPostIdRoute
@@ -424,21 +623,33 @@ const PostsRouteChildren: PostsRouteChildren = {
 
 const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
 
+interface ProductsRouteChildren {
+  ProductsProductIdRoute: typeof ProductsProductIdRoute
+}
+
+const ProductsRouteChildren: ProductsRouteChildren = {
+  ProductsProductIdRoute: ProductsProductIdRoute,
+}
+
+const ProductsRouteWithChildren = ProductsRoute._addFileChildren(
+  ProductsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountsRoute: AccountsRoute,
-  CategoriesRoute: CategoriesRoute,
+  CategoriesRoute: CategoriesRouteWithChildren,
   ContactsRoute: ContactsRoute,
-  CouponsRoute: CouponsRoute,
+  CouponsRoute: CouponsRouteWithChildren,
   LeadsRoute: LeadsRoute,
   LoginRoute: LoginRoute,
-  MediaRoute: MediaRoute,
+  MediaRoute: MediaRouteWithChildren,
   NavigationRoute: NavigationRoute,
-  OrdersRoute: OrdersRoute,
-  PagesRoute: PagesRoute,
-  PortfoliosRoute: PortfoliosRoute,
+  OrdersRoute: OrdersRouteWithChildren,
+  PagesRoute: PagesRouteWithChildren,
+  PortfoliosRoute: PortfoliosRouteWithChildren,
   PostsRoute: PostsRouteWithChildren,
-  ProductsRoute: ProductsRoute,
+  ProductsRoute: ProductsRouteWithChildren,
   ProfileRoute: ProfileRoute,
   RedirectsRoute: RedirectsRoute,
   SettingsRoute: SettingsRoute,

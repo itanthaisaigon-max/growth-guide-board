@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { api } from "@/lib/api/client";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { StatusBadge } from "@/components/admin/StatusBadge";
@@ -42,15 +42,17 @@ const filters = [
 ];
 
 function OrdersPage() {
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Orders" description="All customer orders and their fulfillment status." />
+      <PageHeader title="Orders" description="All customer orders. Double-click a row to open." />
       <ResourceTable<Order>
         queryKey="orders"
         fetcher={(p) => api.orders.list(p)}
         columns={columns}
         filters={filters}
         searchPlaceholder="Search order # or customer…"
+        onRowDoubleClick={(o) => navigate({ to: "/orders/$orderId", params: { orderId: String(o.id) } })}
       />
     </div>
   );
