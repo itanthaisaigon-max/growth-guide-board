@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { api } from "@/lib/api/client";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { StatusBadge } from "@/components/admin/StatusBadge";
@@ -45,15 +45,17 @@ const filters = [
 ];
 
 function CouponsPage() {
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Coupons" description="Promotional discount codes for your store." actionLabel="New coupon" />
+      <PageHeader title="Coupons" description="Promotional discount codes. Double-click a row to open." actionLabel="New coupon" />
       <ResourceTable<Coupon>
         queryKey="coupons"
         fetcher={(p) => api.coupons.list(p)}
         columns={columns}
         filters={filters}
         searchPlaceholder="Search by code…"
+        onRowDoubleClick={(c) => navigate({ to: "/coupons/$couponId", params: { couponId: String(c.id) } })}
       />
     </div>
   );

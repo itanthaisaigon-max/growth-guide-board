@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { api } from "@/lib/api/client";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { StatusBadge } from "@/components/admin/StatusBadge";
@@ -34,15 +34,17 @@ const columns: Column<Product>[] = [
 ];
 
 function ProductsPage() {
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Products" description="Catalog, pricing, and stock for your store." actionLabel="New product" />
+      <PageHeader title="Products" description="Catalog, pricing, and stock for your store. Double-click a row to open." actionLabel="New product" />
       <ResourceTable<Product>
         queryKey="products"
         fetcher={(p) => api.products.list(p)}
         columns={columns}
         filters={PUBLISH_FILTERS}
         searchPlaceholder="Search by name, slug, SKU…"
+        onRowDoubleClick={(p) => navigate({ to: "/products/$productId", params: { productId: String(p.id) } })}
       />
     </div>
   );

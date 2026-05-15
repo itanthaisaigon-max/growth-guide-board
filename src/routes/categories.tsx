@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { api } from "@/lib/api/client";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { ResourceTable, type Column } from "@/components/admin/ResourceTable";
@@ -22,14 +22,16 @@ const columns: Column<Category>[] = [
 ];
 
 function CategoriesPage() {
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Categories" description="Group posts and products by topic." actionLabel="New category" />
+      <PageHeader title="Categories" description="Group posts and products by topic. Double-click a row to open." actionLabel="New category" />
       <ResourceTable<Category>
         queryKey="categories"
         fetcher={(p) => api.categories.list(p)}
         columns={columns}
         searchPlaceholder="Search categories…"
+        onRowDoubleClick={(c) => navigate({ to: "/categories/$categoryId", params: { categoryId: String(c.id) } })}
       />
     </div>
   );
