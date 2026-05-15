@@ -1,3 +1,4 @@
+import { useNavigate } from "@tanstack/react-router";
 import { api } from "@/lib/api/client";
 import { StatusBadge } from "@/components/admin/StatusBadge";
 import { PageHeader } from "@/components/admin/PageHeader";
@@ -31,7 +32,7 @@ const columns: Column<Post>[] = [
   {
     header: "", className: "w-12",
     cell: () => (
-      <Button variant="ghost" size="icon" className="h-8 w-8">
+      <Button variant="ghost" size="icon" className="h-8 w-8" onClick={(e) => e.stopPropagation()}>
         <MoreHorizontal className="h-4 w-4" />
       </Button>
     ),
@@ -39,9 +40,14 @@ const columns: Column<Post>[] = [
 ];
 
 export function PostsScreen() {
+  const navigate = useNavigate();
   return (
     <div>
-      <PageHeader title="Posts" description="Articles, news, and editorial pieces." actionLabel="New post" />
+      <PageHeader
+        title="Posts"
+        description="Articles, news, and editorial pieces. Double-click a row to open."
+        actionLabel="New post"
+      />
       <ResourceTable<Post>
         queryKey="posts"
         fetcher={(p) => api.posts.list(p)}
@@ -49,6 +55,7 @@ export function PostsScreen() {
         filters={PUBLISH_FILTERS}
         searchPlaceholder="Search posts…"
         emptyText="No posts match your filters."
+        onRowDoubleClick={(p) => navigate({ to: "/posts/$postId", params: { postId: String(p.id) } })}
       />
     </div>
   );

@@ -27,6 +27,7 @@ import { Route as ContactsRouteImport } from './routes/contacts'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as AccountsRouteImport } from './routes/accounts'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PostsPostIdRouteImport } from './routes/posts.$postId'
 
 const TagsRoute = TagsRouteImport.update({
   id: '/tags',
@@ -118,6 +119,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PostsPostIdRoute = PostsPostIdRouteImport.update({
+  id: '/$postId',
+  path: '/$postId',
+  getParentRoute: () => PostsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -132,12 +138,13 @@ export interface FileRoutesByFullPath {
   '/orders': typeof OrdersRoute
   '/pages': typeof PagesRoute
   '/portfolios': typeof PortfoliosRoute
-  '/posts': typeof PostsRoute
+  '/posts': typeof PostsRouteWithChildren
   '/products': typeof ProductsRoute
   '/profile': typeof ProfileRoute
   '/redirects': typeof RedirectsRoute
   '/settings': typeof SettingsRoute
   '/tags': typeof TagsRoute
+  '/posts/$postId': typeof PostsPostIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -152,12 +159,13 @@ export interface FileRoutesByTo {
   '/orders': typeof OrdersRoute
   '/pages': typeof PagesRoute
   '/portfolios': typeof PortfoliosRoute
-  '/posts': typeof PostsRoute
+  '/posts': typeof PostsRouteWithChildren
   '/products': typeof ProductsRoute
   '/profile': typeof ProfileRoute
   '/redirects': typeof RedirectsRoute
   '/settings': typeof SettingsRoute
   '/tags': typeof TagsRoute
+  '/posts/$postId': typeof PostsPostIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -173,12 +181,13 @@ export interface FileRoutesById {
   '/orders': typeof OrdersRoute
   '/pages': typeof PagesRoute
   '/portfolios': typeof PortfoliosRoute
-  '/posts': typeof PostsRoute
+  '/posts': typeof PostsRouteWithChildren
   '/products': typeof ProductsRoute
   '/profile': typeof ProfileRoute
   '/redirects': typeof RedirectsRoute
   '/settings': typeof SettingsRoute
   '/tags': typeof TagsRoute
+  '/posts/$postId': typeof PostsPostIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -201,6 +210,7 @@ export interface FileRouteTypes {
     | '/redirects'
     | '/settings'
     | '/tags'
+    | '/posts/$postId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/redirects'
     | '/settings'
     | '/tags'
+    | '/posts/$postId'
   id:
     | '__root__'
     | '/'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/redirects'
     | '/settings'
     | '/tags'
+    | '/posts/$postId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -256,7 +268,7 @@ export interface RootRouteChildren {
   OrdersRoute: typeof OrdersRoute
   PagesRoute: typeof PagesRoute
   PortfoliosRoute: typeof PortfoliosRoute
-  PostsRoute: typeof PostsRoute
+  PostsRoute: typeof PostsRouteWithChildren
   ProductsRoute: typeof ProductsRoute
   ProfileRoute: typeof ProfileRoute
   RedirectsRoute: typeof RedirectsRoute
@@ -392,8 +404,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/posts/$postId': {
+      id: '/posts/$postId'
+      path: '/$postId'
+      fullPath: '/posts/$postId'
+      preLoaderRoute: typeof PostsPostIdRouteImport
+      parentRoute: typeof PostsRoute
+    }
   }
 }
+
+interface PostsRouteChildren {
+  PostsPostIdRoute: typeof PostsPostIdRoute
+}
+
+const PostsRouteChildren: PostsRouteChildren = {
+  PostsPostIdRoute: PostsPostIdRoute,
+}
+
+const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -408,7 +437,7 @@ const rootRouteChildren: RootRouteChildren = {
   OrdersRoute: OrdersRoute,
   PagesRoute: PagesRoute,
   PortfoliosRoute: PortfoliosRoute,
-  PostsRoute: PostsRoute,
+  PostsRoute: PostsRouteWithChildren,
   ProductsRoute: ProductsRoute,
   ProfileRoute: ProfileRoute,
   RedirectsRoute: RedirectsRoute,
